@@ -9,15 +9,16 @@ import MainContent from './pages/MainContent';
 import LoginForm from './pages/Login';
 import ProtectedRoute from './components/ProtectedRoute';
 import RegisterForm from './pages/register';
+import ClientReclamations from './pages/Client';
 
 function App() {
   return (
     <Routes>
-      {/* Login route */}
+      {/* Auth routes */}
       <Route path="/login" element={<LoginForm />} />
       <Route path="/register" element={<RegisterForm />} />
 
-      {/* Protected app routes */}
+      {/* Routes admin/app avec AppLayout */}
       <Route
         path="/"
         element={
@@ -34,7 +35,17 @@ function App() {
         <Route path="main" element={<MainContent />} />
       </Route>
 
-      {/* Catch-all redirects to login */}
+      {/* Route client hors AppLayout */}
+      <Route
+        path="/clientreclamation"
+        element={
+          <ProtectedRoute>
+            <ClientReclamations />
+          </ProtectedRoute>
+        }
+      />
+
+      {/* Catch-all */}
       <Route path="*" element={<Navigate to="/login" replace />} />
     </Routes>
   );

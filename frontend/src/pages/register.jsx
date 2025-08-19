@@ -24,7 +24,11 @@ export default function RegisterForm() {
       const response = await fetch('http://localhost:3000/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ 
+          email, 
+          password, 
+          role: "client"  // ✅ toujours client
+        }),
       });
 
       const data = await response.json();
@@ -35,7 +39,7 @@ export default function RegisterForm() {
         return;
       }
 
-      // After successful registration, redirect to login
+      // ✅ Après inscription redirection vers login
       navigate('/login');
     } catch (err) {
       console.error(err);

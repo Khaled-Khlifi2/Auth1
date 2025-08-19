@@ -28,9 +28,18 @@ export default function LoginForm() {
         return;
       }
 
-      // Save token and navigate to protected route
+      // Sauvegarde token + role dans le localStorage
       localStorage.setItem('token', data.token);
-      navigate('/discussion');
+      localStorage.setItem('role', data.role);
+
+      // Redirection selon rôle
+      if (data.role === 'admin') {
+        navigate('/discussion'); // interface admin
+      } else if (data.role === 'client') {
+        navigate('/clientreclamation'); // interface client
+      } else {
+        navigate('/login');
+      }
     } catch (err) {
       setError('Server error, please try again.');
       console.error(err);

@@ -5,6 +5,8 @@ const { connectDB } = require('./config/db');
 const authRoutes = require('./routes/auth');
 const ticketRoutes = require('./routes/tickets');
 const discussionRoutes = require('./routes/discussionRoutes');
+const reclamationRoutes = require("./routes/reclamations");
+
 
 
 
@@ -23,6 +25,8 @@ connectDB()
 // Routes
 app.use('/', authRoutes);
 app.use('/tickets', ticketRoutes); 
+app.use("/reclamations", reclamationRoutes);
+
 //app.use('/discussion', discussionRoutes(db));
 
 

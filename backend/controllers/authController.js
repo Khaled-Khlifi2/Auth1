@@ -5,15 +5,15 @@ const { getDB } = require('../config/db');
 const JWT_SECRET = process.env.JWT_SECRET || 'secret-key';
 
 async function register(req, res) {
-  const { email, password } = req.body;
-  if (!email || !password) return res.status(400).json({ message: 'Email and password are required' });
+  const { email, password, role } = req.body; // <-- ajout du rôle
+  if (!email || !password || !role) return res.status(400).json({ message: 'Email, password and role are required' });
 
   const db = getDB();
   const existingUser = await db.collection('login').findOne({ email });
   if (existingUser) return res.status(400).json({ message: 'Email already exists' });
 
   const hashedPassword = await bcrypt.hash(password, 10);
-  const result = await db.collection('login').insertOne({ email, password: hashedPassword });
+  const result = await db.collection('login').insertOne({ email, password: hashedPassword, role });
   res.status(201).json({ message: 'User registered', userId: result.insertedId });
 }
 
@@ -27,8 +27,13 @@ async function login(req, res) {
     return res.status(401).json({ message: 'Invalid credentials' });
   }
 
-  const token = jwt.sign({ userId: user._id, email: user.email }, JWT_SECRET, { expiresIn: '1h' });
-  res.json({ message: 'Login successful', token });
+  const token = jwt.sign(
+    { userId: user._id, email: user.email, role: user.role }, // <-- rôle dans le token
+    JWT_SECRET,
+    { expiresIn: '1h' }
+  );
+
+  res.json({ message: 'Login successful', token, role: user.role }); // <-- renvoi du rôle
 }
 
 module.exports = { register, login };
