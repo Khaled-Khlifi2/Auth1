@@ -6,6 +6,7 @@ export default function RegisterForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [role, setRole] = useState('client'); // ✅ Par défaut client
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -27,7 +28,7 @@ export default function RegisterForm() {
         body: JSON.stringify({ 
           email, 
           password, 
-          role: "client"  // ✅ toujours client
+          role // ✅ Utilisation du rôle choisi
         }),
       });
 
@@ -106,7 +107,7 @@ export default function RegisterForm() {
             />
           </div>
 
-          <div style={{ marginBottom: 20 }}>
+          <div style={{ marginBottom: 15 }}>
             <label style={{ display: 'block', marginBottom: 5, color: '#555' }}>Confirm Password</label>
             <input
               type="password"
@@ -121,6 +122,24 @@ export default function RegisterForm() {
                 outline: 'none'
               }}
             />
+          </div>
+
+          <div style={{ marginBottom: 20 }}>
+            <label style={{ display: 'block', marginBottom: 5, color: '#555' }}>Role</label>
+            <select
+              value={role}
+              onChange={(e) => setRole(e.target.value)}
+              style={{
+                width: '100%',
+                padding: 10,
+                borderRadius: 6,
+                border: '1px solid #ccc',
+                outline: 'none'
+              }}
+            >
+              <option value="client">Client</option>
+              <option value="admin">Admin</option>
+            </select>
           </div>
 
           <button

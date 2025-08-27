@@ -38,7 +38,7 @@ const Discussion = () => {
   const handleMessageSubmit = (e) => {
     e.preventDefault();
     console.log('Message envoyé pour', selectedReclamation.nomClient, ':', message);
-    alert(`Message envoyé à ${selectedReclamation.nomClient} : ${message}`);
+    //alert(`Message envoyé à ${selectedReclamation.nomClient} : ${message}`);
     setMessage('');
   };
 
